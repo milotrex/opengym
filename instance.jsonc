@@ -29,14 +29,14 @@
   // Delete this block to deploy to *.workers.dev instead — fine for a look, not for passkeys
   // you intend to keep, because workers.dev is on the Public Suffix List (worker/README.md).
   "routes": [
-    { "pattern": "opengym.rcn.sh", "custom_domain": true }
+    { "pattern": "opengym.towersight.net", "custom_domain": true }
   ],
 
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "opengym",
-      "database_id": "95de5971-bed3-49de-96a4-5d46b4b9f884",
+      "database_id": "01b6d9df-ca35-455a-89c1-5b0f31fb36d5",
       "migrations_dir": "./worker/migrations"
     }
   ],
@@ -44,8 +44,8 @@
   "vars": {
     // Changing RP_ID invalidates every passkey ever registered here. It is not a setting so
     // much as a commitment.
-    "RP_ID": "opengym.rcn.sh",
-    "ORIGIN": "https://opengym.rcn.sh",
+    "RP_ID": "opengym.towersight.net",
+    "ORIGIN": "https://opengym.towersight.net",
     "RP_NAME": "openGym",
 
     // A private instance: no open signup, no guest mode, sign-ins last a quarter.
