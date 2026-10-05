@@ -96,6 +96,29 @@ For local development the same four go in `.dev.vars` (gitignored) — copy
 `ORIGIN=http://localhost:8787` there too; passkeys work over plain HTTP on localhost and nowhere
 else.
 
+### Syncing secrets from GitHub (this fork)
+
+Secrets stay on the Worker across deploys, so you set them once and again only when you rotate
+one. If you would rather keep the values in GitHub than type them into the dashboard, the
+`Sync Worker secrets` workflow (`.github/workflows/sync-secrets.yml`) pushes them with
+`wrangler secret bulk`. It runs only when you start it from the Actions tab, never on a push or a
+pull request.
+
+Add these under Settings, Secrets and variables, Actions, as repository secrets:
+
+| GitHub secret | Value |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | a token with Account, Workers Scripts: Edit (nothing else) |
+| `CLOUDFLARE_ACCOUNT_ID` | your Cloudflare account id |
+| `SESSION_SECRET` | `openssl rand -hex 32` |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | `npx web-push generate-vapid-keys`; set both or neither |
+| `ADMIN_UIDS` | optional; comma-separated user ids |
+
+Then run the workflow. Empty optional values are skipped, so they never blank a secret that is
+already set. GitHub cannot show a secret back to you either, so keep a copy elsewhere. The
+Cloudflare token is the cost of this route: Workers Builds deploys without one, through its
+GitHub App. Delete the token and the workflow if you stop using it.
+
 ## Build-time values
 
 Two things are baked into the frontend bundle rather than read at runtime, so setting them in
